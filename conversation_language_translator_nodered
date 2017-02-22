@@ -1,0 +1,369 @@
+[
+    {
+        "id": "dd91f870.868b6",
+        "type": "tab",
+        "label": "Flow 4"
+    },
+    {
+        "id": "7662adc7.c1853c",
+        "type": "function",
+        "z": "dd91f870.868b6",
+        "name": "#greetings",
+        "func": "msg.payload =  {\n    \"response_type\": \"in_channel\",\n    \"text\": msg.payload.output.text[0]};\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 464,
+        "y": 501,
+        "wires": [
+            [
+                "6a16c018.83ad4"
+            ]
+        ]
+    },
+    {
+        "id": "48580615.2a81e",
+        "type": "watson-conversation-v1",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "workspaceid": "",
+        "multiuser": false,
+        "context": true,
+        "x": 571,
+        "y": 66,
+        "wires": [
+            [
+                "ee8a1dc3.6f4a98"
+            ]
+        ]
+    },
+    {
+        "id": "3d369b47.979314",
+        "type": "function",
+        "z": "dd91f870.868b6",
+        "name": "pick text from payload",
+        "func": "msg.payload = msg.payload;\nglobal.set(\"iText\",msg.payload);\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 335,
+        "y": 65,
+        "wires": [
+            [
+                "48580615.2a81e"
+            ]
+        ]
+    },
+    {
+        "id": "ee8a1dc3.6f4a98",
+        "type": "switch",
+        "z": "dd91f870.868b6",
+        "name": "Intents",
+        "property": "payload.intents[0].intent",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "translate",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "thankyou",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "greetings",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 85,
+        "y": 217,
+        "wires": [
+            [
+                "27dcfe35.679182"
+            ],
+            [
+                "7f4192f0.db157c"
+            ],
+            [
+                "7662adc7.c1853c"
+            ]
+        ]
+    },
+    {
+        "id": "4badd348.fba5e4",
+        "type": "watson-translator",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "action": "translate",
+        "basemodel": "ar-en",
+        "domain": "conversational",
+        "srclang": "en",
+        "destlang": "fr",
+        "password": "",
+        "custom": "",
+        "domainhidden": "conversational",
+        "srclanghidden": "en",
+        "destlanghidden": "fr",
+        "basemodelhidden": "ar-en",
+        "customhidden": "",
+        "filetype": "forcedglossary",
+        "trainid": "",
+        "lgparams2": true,
+        "ldparamshidden2": "true",
+        "x": 635.5,
+        "y": 299,
+        "wires": [
+            [
+                "95b8d84c.3bfb6"
+            ]
+        ]
+    },
+    {
+        "id": "7f4192f0.db157c",
+        "type": "function",
+        "z": "dd91f870.868b6",
+        "name": "#thankyou",
+        "func": "msg.payload =  {\n    \"response_type\": \"in_channel\",\n    \"text\": msg.payload.output.text[0]\n    \n};\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 463,
+        "y": 458,
+        "wires": [
+            [
+                "6a16c018.83ad4"
+            ]
+        ]
+    },
+    {
+        "id": "8eb61903.fd83",
+        "type": "watson-language-translator-identify",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "x": 414.5,
+        "y": 177,
+        "wires": [
+            [
+                "97116331.321eb8"
+            ]
+        ]
+    },
+    {
+        "id": "97116331.321eb8",
+        "type": "switch",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "property": "lang.language",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "en",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "fr",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "es",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 154.5,
+        "y": 336,
+        "wires": [
+            [
+                "3d7c3834.400de8"
+            ],
+            [
+                "702c2a82.33336c"
+            ],
+            [
+                "b5748089.19eb08"
+            ]
+        ]
+    },
+    {
+        "id": "92764c37.ec88d",
+        "type": "watson-translator",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "action": "translate",
+        "basemodel": "ar-en",
+        "domain": "conversational",
+        "srclang": "fr",
+        "destlang": "en",
+        "password": "",
+        "custom": "",
+        "domainhidden": "conversational",
+        "srclanghidden": "fr",
+        "destlanghidden": "en",
+        "basemodelhidden": "ar-en",
+        "customhidden": "",
+        "filetype": "forcedglossary",
+        "trainid": "",
+        "lgparams2": true,
+        "ldparamshidden2": "true",
+        "x": 628.5,
+        "y": 342,
+        "wires": [
+            [
+                "95b8d84c.3bfb6"
+            ]
+        ]
+    },
+    {
+        "id": "95b8d84c.3bfb6",
+        "type": "function",
+        "z": "dd91f870.868b6",
+        "name": "#textextraction",
+        "func": "msg.payload = {\n    \"response_type\": \"in_channel\",\n    \"text\":msg.payload\n}\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 860,
+        "y": 324,
+        "wires": [
+            [
+                "6a16c018.83ad4"
+            ]
+        ]
+    },
+    {
+        "id": "27dcfe35.679182",
+        "type": "function",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "func": "msg.payload = global.get(\"iText\");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 241.5,
+        "y": 176,
+        "wires": [
+            [
+                "8eb61903.fd83"
+            ]
+        ]
+    },
+    {
+        "id": "3d7c3834.400de8",
+        "type": "function",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "func": "msg.payload = global.get(\"iText\");\nmsg.payload = msg.payload.replace(\"Translate\", \" \");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 457,
+        "y": 297,
+        "wires": [
+            [
+                "4badd348.fba5e4"
+            ]
+        ]
+    },
+    {
+        "id": "702c2a82.33336c",
+        "type": "function",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "func": "msg.payload = global.get(\"iText\");\nmsg.payload = msg.payload.replace(\"Translate\", \" \");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 453,
+        "y": 337,
+        "wires": [
+            [
+                "92764c37.ec88d"
+            ]
+        ]
+    },
+    {
+        "id": "181428d7.41652f",
+        "type": "slackbot-listen",
+        "z": "dd91f870.868b6",
+        "slackbot": "c084bfc.4a677c",
+        "name": "",
+        "x": 116.5,
+        "y": 66,
+        "wires": [
+            [
+                "3d369b47.979314"
+            ]
+        ]
+    },
+    {
+        "id": "6a16c018.83ad4",
+        "type": "slackbot-reply",
+        "z": "dd91f870.868b6",
+        "slackbot": "2bea5c3c.6f958c",
+        "name": "",
+        "x": 1038.5,
+        "y": 343,
+        "wires": []
+    },
+    {
+        "id": "b5748089.19eb08",
+        "type": "function",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "func": "msg.payload = global.get(\"iText\");\nmsg.payload = msg.payload.replace(\"Translate\", \" \");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 447,
+        "y": 378,
+        "wires": [
+            [
+                "59571404.fc14dc"
+            ]
+        ]
+    },
+    {
+        "id": "59571404.fc14dc",
+        "type": "watson-translator",
+        "z": "dd91f870.868b6",
+        "name": "",
+        "action": "translate",
+        "basemodel": "ar-en",
+        "domain": "conversational",
+        "srclang": "es",
+        "destlang": "en",
+        "password": "",
+        "custom": "",
+        "domainhidden": "conversational",
+        "srclanghidden": "es",
+        "destlanghidden": "en",
+        "basemodelhidden": "ar-en",
+        "customhidden": "",
+        "filetype": "forcedglossary",
+        "trainid": "",
+        "lgparams2": true,
+        "ldparamshidden2": "true",
+        "x": 635,
+        "y": 389,
+        "wires": [
+            [
+                "95b8d84c.3bfb6"
+            ]
+        ]
+    },
+    {
+        "id": "c084bfc.4a677c",
+        "type": "slackbot-controller",
+        "z": "",
+        "name": "Translator",
+        "bot_token": ""
+    },
+    {
+        "id": "2bea5c3c.6f958c",
+        "type": "slackbot-controller",
+        "z": "",
+        "name": "Translator",
+        "bot_token": ""
+    }
+]
